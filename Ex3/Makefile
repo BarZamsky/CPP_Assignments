@@ -3,4 +3,4 @@ CXXFLAGS=-std=c++17
 
 all: 
 	$(CXX) $(CXXFLAGS) *.cpp
-	./a.out
+./a.out

@@ -13,7 +13,7 @@ void test1() {
 	dana.follow(avi);
 	cout << "  " << chana.numFollowers() << " " <<  chana.numFollowing() << endl; // 0 1
 	cout << "  " << avi.numFollowers() << " " <<  avi.numFollowing() << endl; // 1 0
-//	cout << "  " << Member::count() << endl; // 4
+	cout << "  " << Member::count() << endl; // 4
 }
 
 int main() {

@@ -9,7 +9,7 @@ void Member:: follow(Member& m)
      }
 }
 
-void Member:: unfollow(Member m)
+void Member:: unfollow(Member& m)
 {
     for (int i=0; i<this->followers.size(); i++)
     {
@@ -38,4 +38,7 @@ int Member :: numFollowing()
     return this->followers.size();
 }
 
-
+int count()
+{
+    return numUsers;
+}

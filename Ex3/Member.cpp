@@ -1,27 +1,27 @@
 #include "Member.h"
 #include <algorithm>
 
-void Member:: follow(Member& m)
+void Member::follow(Member& m)
 { 
-   if(find(this->followers.begin(),this->followers.end(), m.userId) == this->followers.end() ){
-        this->followers.push_back(m.userId);
-        m.following.push_back(this->userId);
+   if(find(followers.begin(),followers.end(), m.userId) == followers.end() ){
+        followers.push_back(m.userId);
+        m.following.push_back(userId);
      }
 }
 
-void Member:: unfollow(Member& m)
+void Member::unfollow(Member& m)
 {
-    for (int i=0; i<this->followers.size(); i++)
+    for (int i=0; i<followers.size(); i++)
     {
-        if (m.userId==this->followers.at(i))
+        if (m.userId==followers.at(i))
         {
-            this->followers.erase(followers.begin()+i);
+            followers.erase(followers.begin()+i);
         }
     }
 
     for (int j=0; j<m.followers.size(); j++)
     {
-        if (this->userId==m.following.at(j))
+        if (userId==m.following.at(j))
         {
             m.following.erase(following.begin()+j);
         }
@@ -29,19 +29,34 @@ void Member:: unfollow(Member& m)
 }
 int Member::numFollowers()
 {
+    for(int i=0; i<following.size();i++){
+        auto it =find(_id.begin(), _id.end(), following[i]);
+            if (it == _id.end())
+            {
+                auto index = distance(following.begin(), it);
+                following.erase(following.begin()+index);
+                }
+            }
     return following.size();
 }
 
 int Member::numFollowing()
 {
+      for(int i=0; i<followers.size();i++){
+        auto it =find(_id.begin(), _id.end(), followers[i]);
+            if (it == _id.end())
+            {
+                auto index = distance(followers.begin(), it);
+                followers.erase(followers.begin()+index);
+                }
+            }
     return followers.size();
 }
 
 // destructor
 Member::~Member()
 {
-   following.erase(following.end()-1);
-   followers.erase(followers.end()-1);
     --numUsers;
+    _id.erase(_id.end()-1);
 }
 

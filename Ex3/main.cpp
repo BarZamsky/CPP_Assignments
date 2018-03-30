@@ -1,9 +1,7 @@
 #include <iostream>
 using namespace std;
-
 #include "Member.h"
 #include "Member.cpp"
-
 
 Member avi, beni, chana;
 

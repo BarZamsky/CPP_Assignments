@@ -1,36 +1,32 @@
 #include "Member.h"
 #include <algorithm>
 
-void Member::follow(Member& m)
+void Member:: follow(Member& m)
 { 
-    // check if the member already exist in the vector
-        for(int i=0; i<followers.size(); i++){
-            if(m.userId == (*followers[i]).userId) return;
-        }
-    // else- adding it 
-        followers.push_back(&m);
-        m.following.push_back(&(*this));
+   if(find(this->followers.begin(),this->followers.end(), m.userId) == this->followers.end() ){
+        this->followers.push_back(m.userId);
+        m.following.push_back(this->userId);
+     }
 }
 
-void Member::unfollow(Member& m)
+void Member:: unfollow(Member& m)
 {
-    for (int i = 0 ; i < followers.size(); i++)
+    for (int i=0; i<this->followers.size(); i++)
     {
-        if (m.userId==(*followers[i]).userId)
+        if (m.userId==this->followers.at(i))
         {
-            followers.erase(followers.begin()+i);
+            this->followers.erase(followers.begin()+i);
         }
     }
 
-    for (int i = 0 ; i < m.following.size(); i++)
+    for (int j=0; j<m.followers.size(); j++)
     {
-        if (m.following[i]->userId == userId)
+        if (this->userId==m.following.at(j))
         {
-            m.following.erase(m.following.begin()+i);
+            m.following.erase(following.begin()+j);
         }
     }
 }
-
 int Member::numFollowers()
 {
     return following.size();

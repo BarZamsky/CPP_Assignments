@@ -7,8 +7,8 @@ int static numUsers=0;
 class Member
 {
     int userId;
-    vector<Member*> following;
-    vector<Member*> followers;   
+    vector<int> following;
+    vector<int> followers;   
 
     public:
     Member() { userId=++numUsers;}

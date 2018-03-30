@@ -2,23 +2,24 @@
 #include <vector>
 using namespace std;
 
-int static numUsers=1;
+int static numUsers=0;
 
 class Member
 {
     int userId;
-    vector<int> following;
-    vector<int> followers;   
+    vector<Member*> following;
+    vector<Member*> followers;   
 
     public:
-    Member() { this->userId=numUsers++;}
-    ~Member(){--numUsers;}
+    Member() { userId=++numUsers;}
+    ~Member();
+    int static count(){return numUsers;}
     void follow(Member& m);
     void unfollow(Member& m);
-    int numFollowers ();
+    int numFollowers();
     int numFollowing();
 };
 
-int count();// { return numUsers;}
+
 
 

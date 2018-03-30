@@ -1,44 +1,51 @@
 #include "Member.h"
 #include <algorithm>
 
-void Member:: follow(Member& m)
+void Member::follow(Member& m)
 { 
-   if(find(this->followers.begin(),this->followers.end(), m.userId) == this->followers.end() ){
-        this->followers.push_back(m.userId);
-        m.following.push_back(this->userId);
-     }
+    // check if the member already exist in the vector
+        for(int i=0; i<followers.size(); i++){
+            if(m.userId == (*followers[i]).userId) return;
+        }
+    // else- adding it 
+        followers.push_back(&m);
+        m.following.push_back(&(*this));
 }
 
-void Member:: unfollow(Member& m)
+void Member::unfollow(Member& m)
 {
-    for (int i=0; i<this->followers.size(); i++)
+    for (int i = 0 ; i < followers.size(); i++)
     {
-        if (m.userId==this->followers.at(i))
+        if (m.userId==(*followers[i]).userId)
         {
-            this->followers.erase(followers.begin()+i);
+            followers.erase(followers.begin()+i);
         }
     }
 
-    for (int j=0; j<m.followers.size(); j++)
+    for (int i = 0 ; i < m.following.size(); i++)
     {
-        if (this->userId==m.following.at(j))
+        if (m.following[i]->userId == userId)
         {
-            m.following.erase(following.begin()+j);
+            m.following.erase(m.following.begin()+i);
         }
     }
 }
 
-int Member :: numFollowers()
+int Member::numFollowers()
 {
-    return this->following.size();
+    return following.size();
 }
 
-int Member :: numFollowing()
+int Member::numFollowing()
 {
-    return this->followers.size();
+    return followers.size();
 }
 
-int count()
+// destructor
+Member::~Member()
 {
-    return numUsers;
+   following.erase(following.end()-1);
+   followers.erase(followers.end()-1);
+    --numUsers;
 }
+

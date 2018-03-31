@@ -19,11 +19,11 @@ void Member::unfollow(Member& m)
         }
     }
 
-    for (int j=0; j<m.followers.size(); j++)
+    for (int j=0; j<m.following.size(); j++)
     {
         if (userId==m.following[j])
         {
-            m.following.erase(following.begin()+j);
+            m.following.erase(m.following.begin()+j);
         }
     }
 }

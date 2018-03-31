@@ -12,15 +12,13 @@ class Member
     vector<int> followers;   
 
     public:
-    Member() { userId=++numUsers; _id.push_back(numUsers);}
-    ~Member();
-    int static count(){return numUsers;}
-    void follow(Member& m);
-    void unfollow(Member& m);
-    int numFollowers();
-    int numFollowing();
+   Member() { userId=++numUsers; _id.push_back(numUsers);}
+   inline ~Member();
+   inline int static count(){return numUsers;}
+   inline void follow(Member& m);
+   inline void unfollow(Member& m);
+   inline int numFollowers();
+   inline int numFollowing();
 };
-
-
 
 

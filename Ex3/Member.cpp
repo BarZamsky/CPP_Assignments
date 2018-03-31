@@ -56,7 +56,14 @@ int Member::numFollowing()
 // destructor
 Member::~Member()
 {
-    --numUsers;
-    _id.erase(_id.end()-1);
+// checks in _id vector for the userId and erase it
+   vector<int>::iterator it;
+   it =find(_id.begin(), _id.end(),userId);
+        if (it != _id.end())
+        {
+            _id.erase(it);
+        }
+
+   --numUsers;
 }
 

@@ -13,7 +13,7 @@ void Member::unfollow(Member& m)
 {
     for (int i=0; i<followers.size(); i++)
     {
-        if (m.userId==followers.at(i))
+        if (m.userId==followers[i])
         {
             followers.erase(followers.begin()+i);
         }
@@ -21,7 +21,7 @@ void Member::unfollow(Member& m)
 
     for (int j=0; j<m.followers.size(); j++)
     {
-        if (userId==m.following.at(j))
+        if (userId==m.following[j])
         {
             m.following.erase(following.begin()+j);
         }

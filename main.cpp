@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
+
 #include "Member.h"
-#include "Member.cpp"
+
 
 Member avi, beni, chana;
 
@@ -33,5 +34,4 @@ int main() {
 	cout << chana.numFollowers() << " " <<  chana.numFollowing() << endl; // 0 0
 	cout << avi.numFollowers() << " " <<  avi.numFollowing() << endl; // 0 0
 	cout << Member::count() << endl; // 3
-
 }

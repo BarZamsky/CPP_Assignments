@@ -1,24 +1,27 @@
-#pragma once
 #include <vector>
+#include <iostream>
+#include <list>
 
+#pragma once
 using namespace std;
 
-int static numUsers=0;
-static vector<int> _id;
-class Member
-{
-    int userId;
-    vector<int> following;
-    vector<int> followers;   
+static int _numOfUsers;
+static list<int> _onlineUsers;
 
-    public:
-    Member() { userId=++numUsers; _id.push_back(numUsers);}
+class Member{
+
+    int _userId;
+    vector<int> _followers; //i follow
+    vector<int> _followMe; 
+
+public:
+
+    static int count();
+    void follow(Member& m);
+    void unfollow(Member& m);
+    int numFollowers();
+    int numFollowing();
+
+    Member();
     ~Member();
-   inline int static count(){return numUsers;}
-   inline void follow(Member& m);
-   inline void unfollow(Member& m);
-   inline int numFollowers();
-   inline int numFollowing();
 };
-
-

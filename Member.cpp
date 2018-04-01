@@ -1,69 +1,64 @@
 #include "Member.h"
 #include <algorithm>
+#include <iostream>
 
-void Member::follow(Member& m)
-{ 
-   if(find(followers.begin(),followers.end(), m.userId) == followers.end() ){
-        followers.push_back(m.userId);
-        m.following.push_back(userId);
+using namespace std;
+
+Member::Member(){
+    _userId = ++_numOfUsers;
+    _onlineUsers.push_back(_numOfUsers);
+}
+
+Member::~Member(){
+    --_numOfUsers;
+    _onlineUsers.remove(_userId);
+}
+
+void Member::follow(Member& m){
+     if(find(_followers.begin(),_followers.end(), m._userId) == _followers.end() ){
+        _followers.push_back(m._userId);
+        m._followMe.push_back(_userId);
      }
 }
 
-void Member::unfollow(Member& m)
-{
-    for (int i=0; i<followers.size(); i++)
-    {
-        if (m.userId==followers[i])
-        {
-            followers.erase(followers.begin()+i);
+void Member::unfollow(Member& m){
+    for(int i=0; i<_followers.size();i++){
+        if(m._userId == _followers[i]){
+            _followers.erase(_followers.begin()+i);
         }
     }
-
-    for (int j=0; j<m.following.size(); j++)
-    {
-        if (userId==m.following[j])
-        {
-            m.following.erase(m.following.begin()+j);
+    for(int i=0;i<m._followMe.size(); i++){
+        if(_userId==m._followMe[i]){
+            m._followMe.erase(m._followMe.begin()+i);
         }
     }
 }
-int Member::numFollowers()
-{
-    for(int i=0; i<following.size();i++){
-        auto it =find(_id.begin(), _id.end(), following[i]);
-            if (it == _id.end())
-            {
-                auto index = distance(following.begin(), it);
-                following.erase(following.begin()+index);
-                }
-            }
-    return following.size();
-}
 
-int Member::numFollowing()
-{
-      for(int i=0; i<followers.size();i++){
-        auto it =find(_id.begin(), _id.end(), followers[i]);
-            if (it == _id.end())
-            {
-                auto index = distance(followers.begin(), it);
-                followers.erase(followers.begin()+index);
-                }
-            }
-    return followers.size();
-}
+int Member::numFollowers(){
 
-// destructor
-Member::~Member()
-{
-// checks in _id vector for the userId and erase it
-   vector<int>::iterator it;
-   it =find(_id.begin(), _id.end(),userId);
-        if (it != _id.end())
-        {
-            _id.erase(it);
+    for(int i=0;i<_followMe.size();i++){
+        list<int>::iterator it;
+        it= find(_onlineUsers.begin(), _onlineUsers.end(), _followMe[i]);
+        if(it == _onlineUsers.end()){
+            _followMe.erase(_followMe.begin()+i);
         }
+    }
 
-   --numUsers;
+    return _followMe.size();
 }
 
+int Member::numFollowing(){
+
+    for(int i=0;i<_followers.size();i++){
+        list<int>::iterator it;
+        it= find(_onlineUsers.begin(), _onlineUsers.end(), _followers[i]);
+        if(it == _onlineUsers.end()){
+            _followers.erase(_followers.begin()+i);
+        }
+    }
+    return _followers.size();
+}
+
+int Member::count(){
+    return _numOfUsers;
+}

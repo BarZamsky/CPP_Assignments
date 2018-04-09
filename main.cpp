@@ -1,38 +1,51 @@
-#include <iostream>
-using namespace std;
-
 #include "Member.h"
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
-Member avi, beni, chana;
-
-void test1() {
-	Member dana;
-	chana.follow(dana);
-	dana.follow(avi);
-	cout << "  " << chana.numFollowers() << " " <<  chana.numFollowing() << endl; // 0 1
-	cout << "  " << avi.numFollowers() << " " <<  avi.numFollowing() << endl; // 1 0
-	cout << "  " << Member::count() << endl; // 4
+TEST_CASE("follow twice after same member :"){
+    Member bar, shahar;
+    shahar.follow(bar);
+    CHECK(bar.numFollowers() == 1);
+    shahar.follow(bar);
+    CHECK(bar.numFollowers() == 1);
 }
 
-int b() {
-	cout << avi.numFollowers() << " " << avi.numFollowing() << endl; // 0 0
-	avi.follow(beni);
-	cout << avi.numFollowers() << " " << avi.numFollowing() << endl; // 0 1
-	cout << beni.numFollowers() << " " << beni.numFollowing() << endl; // 1 0
-	cout << Member::count() << endl; // 3
-	cout << endl;
+TEST_CASE("check follow :"){
+    Member avi,noa,dani,beni, bar,shahar;
+    avi.follow(noa);
+    noa.follow(dani);
+    dani.follow(avi);
+    beni.follow(shahar);
+    bar.follow(shahar);
+    beni.follow(bar);
+    CHECK(avi.numFollowing() == 1);
+    CHECK(noa.numFollowing() == 1);
+    CHECK(beni.numFollowing() == 2);
+    CHECK(bar.numFollowing() == 1);
+}
 
-	avi.follow(beni); // duplicate follow has no effect
-	cout << avi.numFollowers() << " " << avi.numFollowing() << endl; // 0 1
-	avi.unfollow(beni);	
-	cout << avi.numFollowers() << " " << avi.numFollowing() << endl; // 0 0
-	cout << endl;
+TEST_CASE("check unfollow :"){
+    Member bar,shahar,dana;
+    bar.follow(shahar);
+    dana.follow(shahar);
+    CHECK(shahar.numFollowers() == 2);
+    CHECK(dana.numFollowers() == 0);
+    CHECK(dana.numFollowing()==1);
+    dana.unfollow(shahar);
+    CHECK(shahar.numFollowers() == 1);
+    CHECK(dana.numFollowing() == 0);
+}
 
-	cout << chana.numFollowers() << " " <<  chana.numFollowing() << endl; // 0 0
-	test1();
-	cout << chana.numFollowers() << " " <<  chana.numFollowing() << endl; // 0 0
-	cout << avi.numFollowers() << " " <<  avi.numFollowing() << endl; // 0 0
-	cout << Member::count() << endl; // 3
+void test(Member& m){
+    Member bar;
+    bar.follow(m);
+}
 
+TEST_CASE("Destructor :"){
+    Member avi, beni;
+    beni.follow(avi);
+    CHECK(avi.numFollowers()==1);
+    test(avi);
+    CHECK(avi.numFollowers()==1);
 }

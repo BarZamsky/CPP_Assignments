@@ -15,10 +15,12 @@ Member::~Member(){
 }
 
 void Member::follow(Member& m){
+    if(m._userId != _userId){
      if(find(_followers.begin(),_followers.end(), m._userId) == _followers.end() ){
         _followers.push_back(m._userId);
         m._followMe.push_back(_userId);
-     }
+        }
+    }
 }
 
 void Member::unfollow(Member& m){

@@ -49,3 +49,9 @@ TEST_CASE("Destructor :"){
     test(avi);
     CHECK(avi.numFollowers()==1);
 }
+
+TEST_CASE("follow myself :"){
+    Member avi;
+    avi.follow(avi);
+    CHECK(avi.numFollowing() == 0);
+}
